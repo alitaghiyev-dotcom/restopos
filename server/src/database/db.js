@@ -59,7 +59,11 @@ const dbWrapper = {
         // Temporarily override methods for the transaction block
         const tempDb = {
           run: async (s, p) => {
-             const pgSql = convertQuery(s);
+             const isInsert = s.trim().toUpperCase().startsWith('INSERT');
+             let pgSql = convertQuery(s);
+             if (isInsert && !pgSql.toUpperCase().includes('RETURNING')) {
+               pgSql += ' RETURNING id';
+             }
              const res = await client.query(pgSql, p);
              return { lastInsertRowid: res.rows[0]?.id || null, changes: res.rowCount };
           },

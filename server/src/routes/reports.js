@@ -26,8 +26,8 @@ router.get('/daily', async (req, res) => {
   `, [targetDate]);
 
   const hourly = await db.all(`
-    SELECT strftime('%H', closed_at) as hour, COUNT(*) as order_count, SUM(total) as revenue
-    FROM orders WHERE status = 'closed' AND DATE(closed_at) = ? GROUP BY hour ORDER BY hour
+    SELECT TO_CHAR(closed_at, 'HH24') as hour, COUNT(*) as order_count, SUM(total) as revenue
+    FROM orders WHERE status = 'closed' AND DATE(closed_at) = DATE($1) GROUP BY TO_CHAR(closed_at, 'HH24') ORDER BY hour
   `, [targetDate]);
 
   res.json({ date: targetDate, summary, topProducts, hourly });

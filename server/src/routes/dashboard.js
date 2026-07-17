@@ -49,11 +49,11 @@ router.get('/', async (req, res) => {
   // SQLite'ta strftime ile saat alıyoruz
   const hourlyData = await db.all(`
     SELECT 
-      strftime('%H:00', closed_at) as hour,
+      TO_CHAR(closed_at, 'HH24:00') as hour,
       SUM(total) as amount
     FROM orders
-    WHERE status = 'closed' AND DATE(closed_at) = ?
-    GROUP BY strftime('%H:00', closed_at)
+    WHERE status = 'closed' AND DATE(closed_at) = DATE($1)
+    GROUP BY TO_CHAR(closed_at, 'HH24:00')
     ORDER BY hour ASC
   `, [today]);
 
