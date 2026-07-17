@@ -1,0 +1,23 @@
+.kitchen-page { animation: fadeIn 0.3s ease; }
+.kitchen-empty { display: flex; flex-direction: column; align-items: center; justify-content: center; height: 60vh; gap: 12px; color: var(--text-secondary); }
+.kitchen-empty span { font-size: 4rem; }
+.kitchen-empty h2 { font-size: 1.4rem; }
+
+.kitchen-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(320px, 1fr)); gap: 16px; }
+
+.kitchen-card { background: var(--bg-card); border: 1px solid var(--border-color); border-radius: var(--radius-lg); overflow: hidden; }
+.kitchen-card-header { padding: 16px; background: var(--bg-secondary); border-bottom: 1px solid var(--border-color); display: flex; align-items: center; gap: 12px; flex-wrap: wrap; }
+.kitchen-table { font-size: 1.5rem; font-weight: 800; background: var(--accent-gradient); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
+.kitchen-meta { display: flex; gap: 8px; font-size: 0.75rem; color: var(--text-muted); }
+.kitchen-zone { background: var(--bg-card); padding: 2px 8px; border-radius: var(--radius-full); }
+.kitchen-waiter { margin-left: auto; font-size: 0.75rem; color: var(--text-secondary); }
+
+.kitchen-items { padding: 8px; }
+.kitchen-item { display: flex; justify-content: space-between; align-items: center; padding: 12px; border-radius: var(--radius-md); margin-bottom: 4px; gap: 8px; transition: all var(--transition-fast); }
+.ki-new { background: var(--kitchen-new-bg); border-left: 3px solid var(--kitchen-new); }
+.ki-preparing { background: var(--kitchen-preparing-bg); border-left: 3px solid var(--kitchen-preparing); animation: pulse 2s ease-in-out infinite; }
+
+.kitchen-item-info { display: flex; align-items: center; gap: 8px; flex-wrap: wrap; flex: 1; }
+.kitchen-qty { font-weight: 800; font-size: 1.1rem; color: var(--text-primary); min-width: 24px; }
+.kitchen-name { font-weight: 600; font-size: 0.9rem; }
+.kitchen-note { font-size: 0.7rem; color: var(--kitchen-new); background: rgba(249, 115, 22, 0.1); padding: 2px 8px; border-radius: var(--radius-full); }

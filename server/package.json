@@ -1,0 +1,21 @@
+{
+  "name": "restopos-server",
+  "version": "1.0.0",
+  "description": "RestoPos Restaurant Management System - Backend",
+  "main": "src/app.js",
+  "type": "module",
+  "scripts": {
+    "start": "node src/app.js",
+    "dev": "node --watch src/app.js",
+    "seed": "node src/database/seed.js"
+  },
+  "dependencies": {
+    "cors": "^2.8.5",
+    "dotenv": "^16.6.1",
+    "express": "^4.21.0",
+    "jsonwebtoken": "^9.0.2",
+    "pg": "^8.22.0",
+    "sql.js": "^1.11.0",
+    "ws": "^8.18.0"
+  }
+}
