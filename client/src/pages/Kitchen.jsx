@@ -29,7 +29,8 @@ export default function Kitchen() {
     // WebSocket connection
     let ws;
     try {
-      ws = new WebSocket(`ws://${window.location.hostname}:3001/ws/kitchen`);
+      const wsUrl = import.meta.env.VITE_WS_URL || 'wss://restopos-api-13zd.onrender.com/ws/kitchen';
+      ws = new WebSocket(wsUrl);
       ws.onmessage = () => fetchOrders();
       ws.onerror = () => console.log('WebSocket bağlantı hatası');
     } catch (e) {}

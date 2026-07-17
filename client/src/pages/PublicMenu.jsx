@@ -3,7 +3,7 @@ import { useParams } from 'react-router-dom';
 import './PublicMenu.css';
 
 // Public endpoints don't need token, so we can just use normal fetch
-const API_URL = '/api';
+const API_URL = import.meta.env.VITE_API_URL || 'https://restopos-api-13zd.onrender.com/api';
 
 export default function PublicMenu() {
   const { tableId } = useParams();
