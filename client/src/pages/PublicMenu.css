@@ -1,5 +1,6 @@
 .qr-menu-container {
-  min-height: 100vh;
+  height: 100vh;
+  overflow-y: auto;
   background: #0f172a;
   color: #f8fafc;
   padding-bottom: 40px;

@@ -179,13 +179,14 @@ export default function Tables() {
             <p style={{ marginBottom: '20px', color: 'var(--text-muted)' }}>Müşterileriniz bu kodu okutarak menüyü görebilir.</p>
             <div style={{ background: 'white', padding: '20px', borderRadius: '12px', display: 'inline-block' }}>
               <QRCodeSVG 
-                value={`${window.location.origin.replace('localhost', '192.168.1.148')}/m/${qrModalTable.id}`} 
-                size={200}
-                level="H"
+                value={`${window.location.origin}/m/${qrModalTable.id}`} 
+                size={200} 
+                level={"H"}
+                includeMargin={true}
               />
             </div>
-            <p style={{ marginTop: '16px', fontSize: '0.85rem', color: 'var(--text-muted)' }}>
-              {window.location.origin.replace('localhost', '192.168.1.148')}/m/{qrModalTable.id}
+            <p className="qr-url">
+              {window.location.origin}/m/{qrModalTable.id}
             </p>
             <div style={{ marginTop: '20px' }}>
               <button className="btn btn-primary" onClick={() => setQrModalTable(null)}>Kapat</button>
