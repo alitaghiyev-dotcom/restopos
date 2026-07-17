@@ -20,39 +20,30 @@ async function seed() {
     return;
   }
 
-  const runSeed = await db.transaction(async (txDb) => {
+  await db.transaction(async (txDb) => {
     // ===== PERSONEL =====
     const staffData = [
       ['Ahmet Yılmaz', '1234', 'admin'],
       ['Mehmet Demir', '5678', 'cashier'],
       ['Ayşe Kaya', '1111', 'waiter'],
       ['Fatma Çelik', '2222', 'waiter'],
-      ['Ali Öztürk', '3333', 'waiter'],
-      ['Mustafa Aydın', '4444', 'kitchen'],
-      ['Zeynep Şahin', '5555', 'kitchen'],
+      ['Mutfak Ekibi 1', '4444', 'kitchen']
     ];
-    for (const [name, pin, role] of staffData) {
-      await txDb.run('INSERT INTO staff (name, pin, role) VALUES (?, ?, ?)', [name, pin, role]);
+    for (const s of staffData) {
+      await txDb.run('INSERT INTO staff (name, pin, role) VALUES (?,?,?)', s);
     }
-    console.log('✅ 7 personel eklendi');
-
+    
     // ===== BÖLGELER =====
-    const zones = [
-      ['İç Mekan', 1], ['Bahçe', 2], ['Teras', 3], ['VIP', 4],
+    const zoneData = [
+      ['Bahçe', '1. Kat Bahçe Alanı'],
+      ['Teras', '2. Kat Teras'],
+      ['Salon', 'Ana Salon']
     ];
-    for (const [name, order] of zones) {
-      await txDb.run('INSERT INTO zones (name, sort_order) VALUES (?, ?)', [name, order]);
+    for (const z of zoneData) {
+      await txDb.run('INSERT INTO zones (name, description) VALUES (?,?)', z);
     }
-    console.log('✅ 4 bölge eklendi');
-
+    
     // ===== MASALAR =====
-    const tables = [
-      [1,1,4,'empty',0,0],[2,1,4,'empty',1,0],[3,1,2,'empty',2,0],[4,1,6,'empty',0,1],
-      [5,1,4,'empty',1,1],[6,1,4,'empty',2,1],[7,1,8,'empty',0,2],[8,1,2,'empty',1,2],
-      [9,2,4,'empty',0,0],[10,2,4,'empty',1,0],[11,2,6,'empty',2,0],
-      [12,2,4,'empty',0,1],[13,2,4,'empty',1,1],[14,2,8,'empty',2,1],
-      [15,3,2,'empty',0,0],[16,3,4,'empty',1,0],[17,3,4,'empty',0,1],[18,3,2,'empty',1,1],
-      [19,4,6,'empty',0,0],[20,4,8,'empty',1,0],
     ];
     for (const [num, zone, cap, status, px, py] of tables) {
       await txDb.run('INSERT INTO tables (number, zone_id, capacity, status, position_x, position_y) VALUES (?,?,?,?,?,?)',

@@ -51,36 +51,34 @@ const dbWrapper = {
   },
 
   async transaction(fn) {
-    return async (...args) => {
-      const client = await pool.connect();
-      try {
-        await client.query('BEGIN');
-        
-        // Temporarily override methods for the transaction block
-        const tempDb = {
-          run: async (s, p) => {
-             const isInsert = s.trim().toUpperCase().startsWith('INSERT');
-             let pgSql = convertQuery(s);
-             if (isInsert && !pgSql.toUpperCase().includes('RETURNING')) {
-               pgSql += ' RETURNING id';
-             }
-             const res = await client.query(pgSql, p);
-             return { lastInsertRowid: res.rows[0]?.id || null, changes: res.rowCount };
-          },
-          get: async (s, p) => (await client.query(convertQuery(s), p)).rows[0],
-          all: async (s, p) => (await client.query(convertQuery(s), p)).rows
-        };
-        
-        const result = await fn(tempDb, ...args);
-        await client.query('COMMIT');
-        return result;
-      } catch (e) {
-        await client.query('ROLLBACK');
-        throw e;
-      } finally {
-        client.release();
-      }
-    };
+    const client = await pool.connect();
+    try {
+      await client.query('BEGIN');
+      
+      // Temporarily override methods for the transaction block
+      const tempDb = {
+        run: async (s, p) => {
+           const isInsert = s.trim().toUpperCase().startsWith('INSERT');
+           let pgSql = convertQuery(s);
+           if (isInsert && !pgSql.toUpperCase().includes('RETURNING')) {
+             pgSql += ' RETURNING id';
+           }
+           const res = await client.query(pgSql, p);
+           return { lastInsertRowid: res.rows[0]?.id || null, changes: res.rowCount };
+        },
+        get: async (s, p) => (await client.query(convertQuery(s), p)).rows[0],
+        all: async (s, p) => (await client.query(convertQuery(s), p)).rows
+      };
+      
+      const result = await fn(tempDb);
+      await client.query('COMMIT');
+      return result;
+    } catch (e) {
+      await client.query('ROLLBACK');
+      throw e;
+    } finally {
+      client.release();
+    }
   },
 
   async exec(sql) {
